@@ -1,0 +1,10 @@
+{
+  "name": "lessing-letters-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static browser for Japanese translations of Lessing's letters.",
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "dev": "node scripts/serve.mjs"
+  }
+}

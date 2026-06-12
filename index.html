@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>レッシング書簡集</title>
+    <meta
+      name="description"
+      content="レッシング書簡集の日本語翻訳を検索・閲覧できるサイト"
+    />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <aside class="sidebar">
+        <header class="brand">
+          <p>Gotthold Ephraim Lessing</p>
+          <h1>レッシング書簡集</h1>
+        </header>
+
+        <section class="controls" aria-label="検索条件">
+          <label class="field">
+            <span>語彙検索</span>
+            <input id="queryInput" type="search" placeholder="例: ベルリン、父上、劇場" />
+          </label>
+
+          <div class="date-grid">
+            <label class="field">
+              <span>開始日</span>
+              <input id="fromInput" type="date" min="1743-01-01" max="1781-12-31" />
+            </label>
+            <label class="field">
+              <span>終了日</span>
+              <input id="toInput" type="date" min="1743-01-01" max="1781-12-31" />
+            </label>
+          </div>
+
+          <label class="field">
+            <span>巻</span>
+            <select id="volumeInput">
+              <option value="all">すべて</option>
+              <option value="17">第17巻 1743-1771</option>
+              <option value="18">第18巻 1772-1781</option>
+            </select>
+          </label>
+
+          <div class="button-row">
+            <button id="clearButton" type="button">条件をクリア</button>
+            <button id="downloadResultsButton" type="button">検索結果CSV</button>
+          </div>
+        </section>
+
+        <section class="downloads" aria-label="原稿ダウンロード">
+          <h2>原稿ダウンロード</h2>
+          <a href="/data/lessing_letters_translation.md" download>第17巻 Markdown</a>
+          <a href="/data/lessing_letters_translation_vol18.md" download>第18巻 Markdown</a>
+        </section>
+
+        <section class="results-meta" aria-live="polite">
+          <strong id="resultCount">読み込み中</strong>
+          <span id="rangeText"></span>
+        </section>
+
+        <nav id="letterList" class="letter-list" aria-label="書簡一覧"></nav>
+      </aside>
+
+      <main class="reader">
+        <article id="letterView" class="letter-view">
+          <p class="loading">書簡を読み込んでいます。</p>
+        </article>
+      </main>
+    </div>
+    <script type="module" src="/src/app.js"></script>
+  </body>
+</html>
