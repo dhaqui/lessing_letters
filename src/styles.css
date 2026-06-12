@@ -25,17 +25,17 @@ select {
 
 #app {
   display: grid;
-  grid-template-columns: minmax(320px, 390px) minmax(0, 1fr);
+  grid-template-columns: minmax(280px, 330px) minmax(0, 1fr);
   min-height: 100vh;
 }
 
 .sidebar {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 14px;
   border-right: 1px solid #d9d0c4;
   background: #fbfaf7;
-  padding: 24px;
+  padding: 18px;
   max-height: 100vh;
   overflow: hidden;
 }
@@ -54,7 +54,7 @@ select {
 
 .brand h1 {
   margin: 4px 0 0;
-  font-size: 1.8rem;
+  font-size: 1.55rem;
   line-height: 1.2;
 }
 
@@ -82,7 +82,7 @@ select {
 
 .controls {
   display: grid;
-  gap: 14px;
+  gap: 12px;
 }
 
 .field {
@@ -117,7 +117,7 @@ select {
 .button-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 8px;
 }
 
 button,
@@ -127,7 +127,7 @@ button,
   background: #ece5dc;
   color: #221f1c;
   cursor: pointer;
-  padding: 10px 12px;
+  padding: 9px 10px;
   text-align: center;
   text-decoration: none;
 }
@@ -144,6 +144,17 @@ button:hover,
 
 .downloads h2 {
   margin: 0;
+}
+
+.download-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.download-links a {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .results-meta {
@@ -188,11 +199,11 @@ button:hover,
   min-width: 0;
   max-height: 100vh;
   overflow: auto;
-  padding: 40px min(7vw, 88px);
+  padding: 34px min(4vw, 54px);
 }
 
 .letter-view {
-  max-width: 860px;
+  max-width: 1040px;
   margin: 0 auto;
 }
 
@@ -290,7 +301,8 @@ button:hover,
   }
 
   .date-grid,
-  .button-row {
+  .button-row,
+  .download-links {
     grid-template-columns: 1fr;
   }
 }

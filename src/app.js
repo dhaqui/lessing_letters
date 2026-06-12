@@ -15,7 +15,6 @@ const elements = {
   query: document.querySelector("#queryInput"),
   from: document.querySelector("#fromInput"),
   to: document.querySelector("#toInput"),
-  volume: document.querySelector("#volumeInput"),
   clear: document.querySelector("#clearButton"),
   downloadResults: document.querySelector("#downloadResultsButton"),
   resultCount: document.querySelector("#resultCount"),
@@ -42,7 +41,7 @@ function parseLetters(markdown, source) {
       const originalTitle = block.match(/^原題:\s*(.+)$/m)?.[1]?.trim() ?? "";
       const dateLabel = block.match(/^日付:\s*(.+)$/m)?.[1]?.trim() ?? "日付未詳";
       const dateRange = parseDateRange(dateLabel);
-      const body = block.replace(/^##\s+.+\n?/, "").trim();
+      const body = cleanLetterBody(block);
 
       return {
         id: `${source.volume}-${number}`,
@@ -59,6 +58,15 @@ function parseLetters(markdown, source) {
         searchable: `${title}\n${originalTitle}\n${dateLabel}\n${body}`.toLowerCase(),
       };
     });
+}
+
+function cleanLetterBody(block) {
+  return block
+    .replace(/^##\s+.+\n?/, "")
+    .split("\n")
+    .filter((line) => !/^(原題|日付|宛名):\s*/.test(line.trim()))
+    .join("\n")
+    .trim();
 }
 
 function parseDateRange(label) {
@@ -112,14 +120,12 @@ function applyFilters() {
   const terms = query.split(/\s+/).filter(Boolean);
   const from = elements.from.value;
   const to = elements.to.value;
-  const volume = elements.volume.value;
 
   state.filtered = state.letters.filter((letter) => {
-    const matchesVolume = volume === "all" || letter.volume === volume;
     const matchesTerms = terms.every((term) => letter.searchable.includes(term));
     const matchesFrom = !from || !letter.dateEnd || letter.dateEnd >= from;
     const matchesTo = !to || !letter.dateStart || letter.dateStart <= to;
-    return matchesVolume && matchesTerms && matchesFrom && matchesTo;
+    return matchesTerms && matchesFrom && matchesTo;
   });
 
   if (!state.filtered.some((letter) => letter.id === state.selectedId)) {
@@ -297,7 +303,7 @@ elements.list.addEventListener("click", (event) => {
   scrollToLetter(state.selectedId);
 });
 
-[elements.query, elements.from, elements.to, elements.volume].forEach((input) => {
+[elements.query, elements.from, elements.to].forEach((input) => {
   input.addEventListener("input", applyFilters);
 });
 
@@ -305,7 +311,6 @@ elements.clear.addEventListener("click", () => {
   elements.query.value = "";
   elements.from.value = "";
   elements.to.value = "";
-  elements.volume.value = "all";
   applyFilters();
 });
 

@@ -44,15 +44,6 @@
             </label>
           </div>
 
-          <label class="field">
-            <span>巻</span>
-            <select id="volumeInput">
-              <option value="all">すべて</option>
-              <option value="17">第17巻 1743-1771</option>
-              <option value="18">第18巻 1772-1781</option>
-            </select>
-          </label>
-
           <div class="button-row">
             <button id="clearButton" type="button">条件をクリア</button>
             <button id="downloadResultsButton" type="button">検索結果CSV</button>
@@ -61,8 +52,10 @@
 
         <section class="downloads" aria-label="原稿ダウンロード">
           <h2>原稿ダウンロード</h2>
-          <a href="/data/lessing_letters_translation.md" download>第17巻 Markdown</a>
-          <a href="/data/lessing_letters_translation_vol18.md" download>第18巻 Markdown</a>
+          <div class="download-links">
+            <a href="/data/lessing_letters_translation.md" download>第17巻 Markdown</a>
+            <a href="/data/lessing_letters_translation_vol18.md" download>第18巻 Markdown</a>
+          </div>
         </section>
 
         <section class="results-meta" aria-live="polite">
