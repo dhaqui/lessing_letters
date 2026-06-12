@@ -286,8 +286,8 @@ async function load() {
   );
 
   state.letters = files.flat().sort((a, b) => {
-    if (a.dateStart && b.dateStart && a.dateStart !== b.dateStart) {
-      return a.dateStart.localeCompare(b.dateStart);
+    if (a.volume !== b.volume) {
+      return Number(a.volume) - Number(b.volume);
     }
     return a.number - b.number;
   });
