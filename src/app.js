@@ -21,6 +21,7 @@ const elements = {
   resultCount: document.querySelector("#resultCount"),
   rangeText: document.querySelector("#rangeText"),
   list: document.querySelector("#letterList"),
+  reader: document.querySelector(".reader"),
   view: document.querySelector("#letterView"),
 };
 
@@ -131,7 +132,7 @@ function applyFilters() {
 function render() {
   renderMeta();
   renderList();
-  renderLetter();
+  renderLetters();
 }
 
 function renderMeta() {
@@ -158,24 +159,43 @@ function renderList() {
   );
 }
 
-function renderLetter() {
-  const letter = state.letters.find((item) => item.id === state.selectedId);
-  if (!letter) {
+function renderLetters() {
+  if (!state.filtered.length) {
     elements.view.innerHTML = `<p class="empty">条件に合う書簡がありません。</p>`;
     return;
   }
 
-  elements.view.innerHTML = `
-    <header class="letter-header">
-      <p>${letter.volumeLabel} / 第${letter.number}書簡</p>
-      <h2>${escapeHtml(letter.recipient)}</h2>
-      <dl>
-        ${letter.originalTitle ? `<div><dt>原題</dt><dd>${escapeHtml(letter.originalTitle)}</dd></div>` : ""}
-        <div><dt>日付</dt><dd>${escapeHtml(letter.dateLabel)}</dd></div>
-      </dl>
-    </header>
-    <div class="letter-body">${markdownToHtml(letter.body)}</div>
+  elements.view.innerHTML = state.filtered.map(renderLetterSection).join("");
+}
+
+function renderLetterSection(letter) {
+  return `
+    <section id="${letterSectionId(letter)}" class="letter-section">
+      <header class="letter-header">
+        <p>${letter.volumeLabel} / 第${letter.number}書簡</p>
+        <h2>${escapeHtml(letter.recipient)}</h2>
+        <dl>
+          ${letter.originalTitle ? `<div><dt>原題</dt><dd>${escapeHtml(letter.originalTitle)}</dd></div>` : ""}
+          <div><dt>日付</dt><dd>${escapeHtml(letter.dateLabel)}</dd></div>
+        </dl>
+      </header>
+      <div class="letter-body">${markdownToHtml(letter.body)}</div>
+    </section>
   `;
+}
+
+function letterSectionId(letter) {
+  return `letter-${letter.id}`;
+}
+
+function scrollToLetter(id) {
+  const letter = state.filtered.find((item) => item.id === id);
+  if (!letter) return;
+
+  document.getElementById(letterSectionId(letter))?.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
 }
 
 function markdownToHtml(markdown) {
@@ -273,7 +293,8 @@ elements.list.addEventListener("click", (event) => {
   const button = event.target.closest(".letter-item");
   if (!button) return;
   state.selectedId = button.dataset.id;
-  render();
+  renderList();
+  scrollToLetter(state.selectedId);
 });
 
 [elements.query, elements.from, elements.to, elements.volume].forEach((input) => {

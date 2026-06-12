@@ -41,6 +41,7 @@ select {
 }
 
 .brand p,
+.source-note,
 .letter-header p,
 .letter-number,
 .letter-date,
@@ -59,6 +60,24 @@ select {
 
 .brand p {
   margin: 0;
+}
+
+.source-note {
+  border-top: 1px solid #e4ddd5;
+  border-bottom: 1px solid #e4ddd5;
+  padding: 10px 0;
+}
+
+.source-note h2 {
+  margin: 0 0 4px;
+  color: #4c443d;
+  font-family: system-ui, sans-serif;
+  font-size: 0.76rem;
+}
+
+.source-note p {
+  margin: 0;
+  line-height: 1.6;
 }
 
 .controls {
@@ -177,6 +196,16 @@ button:hover,
   margin: 0 auto;
 }
 
+.letter-section {
+  scroll-margin-top: 32px;
+}
+
+.letter-section + .letter-section {
+  border-top: 1px solid #d9d0c4;
+  margin-top: 64px;
+  padding-top: 54px;
+}
+
 .letter-header {
   border-bottom: 1px solid #d9d0c4;
   margin-bottom: 30px;
@@ -184,9 +213,9 @@ button:hover,
 }
 
 .letter-header h2 {
-  margin: 0 0 16px;
-  font-size: clamp(2rem, 4vw, 3.6rem);
-  line-height: 1.18;
+  margin: 0 0 12px;
+  font-size: clamp(1.25rem, 2vw, 1.8rem);
+  line-height: 1.35;
 }
 
 .letter-header dl {
@@ -253,6 +282,11 @@ button:hover,
   .reader {
     max-height: none;
     padding: 28px 18px 48px;
+  }
+
+  .letter-section + .letter-section {
+    margin-top: 44px;
+    padding-top: 38px;
   }
 
   .date-grid,
